@@ -1,0 +1,284 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+    /* Teal Green palette - primary brand color */
+    --color-navy-50: #f0f3f7;
+    --color-navy-100: #dce3ed;
+    --color-navy-200: #b8c6db;
+    --color-navy-300: #8ea3c3;
+    --color-navy-400: #6580ab;
+    --color-navy-500: #3d5a8a;
+    --color-navy-600: #2d4470;
+    --color-navy-700: #243759;
+    --color-navy-800: #1f2937;
+    --color-navy-900: #161d29;
+    --color-navy-950: #0d1117;
+
+    /* Navy Blue palette - secondary brand color */
+    --color-teal-50: #ecfdf5;
+    --color-teal-100: #d1fae5;
+    --color-teal-200: #a7f3d0;
+    --color-teal-300: #6ee7b7;
+    --color-teal-400: #34d399;
+    --color-teal-500: #10b981;
+    --color-teal-600: #059669;
+    --color-teal-700: #047857;
+    --color-teal-800: #065f46;
+    --color-teal-900: #064e3b;
+    --color-teal-950: #022c22;
+
+    /* Animations */
+    --animate-float: float 6s ease-in-out infinite;
+    --animate-float-delayed: float 6s ease-in-out 2s infinite;
+    --animate-float-slow: float 8s ease-in-out 1s infinite;
+    --animate-fade-in-up: fadeInUp 0.6s ease-out forwards;
+    --animate-pulse-soft: pulseSoft 3s ease-in-out infinite;
+    --animate-gradient-shift: gradientShift 8s ease infinite;
+    --animate-slide-in-left: slideInLeft 0.8s ease-out forwards;
+    --animate-slide-in-right: slideInRight 0.8s ease-out forwards;
+    --animate-glow: glow 2s ease-in-out infinite;
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        33% {
+            transform: translateY(-12px) rotate(1deg);
+        }
+
+        66% {
+            transform: translateY(-6px) rotate(-1deg);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulseSoft {
+
+        0%,
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.85;
+            transform: scale(1.02);
+        }
+    }
+
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(40px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes glow {
+
+        0%,
+        100% {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        50% {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.6);
+        }
+    }
+}
+
+/* Animation delay utilities */
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+    animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+    animation-delay: 600ms;
+}
+
+.animation-delay-800 {
+    animation-delay: 800ms;
+}
+
+.animation-delay-1000 {
+    animation-delay: 1000ms;
+}
+
+/* Scroll-triggered animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Gradient text helper */
+.text-gradient-teal-navy {
+    background: linear-gradient(135deg, #10b981, #3d5a8a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Bento grid */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+}
+
+.bento-grid .bento-hero {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+@media (max-width: 1023px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bento-grid .bento-hero {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bento-grid .bento-hero {
+        grid-column: span 1;
+    }
+}
+
+/* Gradient border effect on hover */
+.gradient-border-hover {
+    position: relative;
+    background: white;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.dark .gradient-border-hover {
+    background: #1f2937;
+}
+
+.gradient-border-hover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: 1rem;
+    background: linear-gradient(135deg, transparent, transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: background 0.3s ease;
+    pointer-events: none;
+}
+
+.gradient-border-hover:hover::before {
+    background: linear-gradient(135deg, #10b981, #3d5a8a);
+}
+
+/* Glow button */
+.btn-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-glow::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(61, 90, 138, 0.4));
+    border-radius: inherit;
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-glow:hover::after {
+    opacity: 1;
+}
+
+/* Company logo marquee */
+.marquee-container {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}

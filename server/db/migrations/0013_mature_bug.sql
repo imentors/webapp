@@ -1,0 +1,1 @@
+ALTER TABLE "mentor_profile" ADD COLUMN "role_title" text DEFAULT 'mentor' NOT NULL;
