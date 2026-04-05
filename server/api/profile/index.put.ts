@@ -13,6 +13,9 @@ interface ProfileUpdateData {
     experience?: string
     skills?: string[]
     categories?: string[]
+    coreDomains?: string[]
+    practicalExpertise?: string[]
+    experienceContext?: string[]
     dateOfBirth?: string
     expertiseDocument?: string
     // Mentee-specific
@@ -74,6 +77,9 @@ export default defineEventHandler(async (event) => {
                     hourlyRate: body.hourlyRate?.toString() || null,
                     skills: body.skills ? JSON.stringify(body.skills) : null,
                     categories: body.categories ? JSON.stringify(body.categories) : null,
+                    coreDomains: body.coreDomains ? JSON.stringify(body.coreDomains) : null,
+                    practicalExpertise: body.practicalExpertise ? JSON.stringify(body.practicalExpertise) : null,
+                    experienceContext: body.experienceContext ? JSON.stringify(body.experienceContext) : null,
                     languages: body.languages ? JSON.stringify(body.languages) : null,
                     timezone: body.timezone || null,
                     dateOfBirth: body.dateOfBirth ? new Date(body.dateOfBirth) : null,
@@ -88,6 +94,9 @@ export default defineEventHandler(async (event) => {
                         hourlyRate: body.hourlyRate?.toString() || null,
                         skills: body.skills ? JSON.stringify(body.skills) : null,
                         categories: body.categories ? JSON.stringify(body.categories) : null,
+                        coreDomains: body.coreDomains ? JSON.stringify(body.coreDomains) : null,
+                        practicalExpertise: body.practicalExpertise ? JSON.stringify(body.practicalExpertise) : null,
+                        experienceContext: body.experienceContext ? JSON.stringify(body.experienceContext) : null,
                         languages: body.languages ? JSON.stringify(body.languages) : null,
                         timezone: body.timezone || null,
                         dateOfBirth: body.dateOfBirth ? new Date(body.dateOfBirth) : null,

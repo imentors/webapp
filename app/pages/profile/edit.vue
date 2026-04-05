@@ -121,24 +121,69 @@
                 />
               </UFormField>
 
-              <UFormField label="Categories" name="categories">
-                <USelectMenu
-                  v-model="profileForm.categories"
-                  :items="categoryOptions"
-                  multiple
-                  searchable
-                  class="w-full"
-                />
+              <!-- Core Domains -->
+              <UFormField label="Core Domains" name="coreDomains" help="Select up to 3 high-level areas you specialize in.">
+                <div class="grid grid-cols-2 gap-2">
+                  <button
+                    v-for="domain in coreDomainOptions"
+                    :key="domain.value"
+                    type="button"
+                    @click="toggleCoreDomain(domain.value)"
+                    :disabled="!profileForm.coreDomains.includes(domain.value) && profileForm.coreDomains.length >= 3"
+                    :class="[
+                      'p-2 rounded-lg border text-left transition-all duration-200 text-sm',
+                      profileForm.coreDomains.includes(domain.value)
+                        ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300'
+                        : profileForm.coreDomains.length >= 3
+                          ? 'border-gray-100 dark:border-gray-800 opacity-50 cursor-not-allowed text-gray-400'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-teal-300 text-gray-700 dark:text-gray-300'
+                    ]"
+                  >
+                    {{ domain.label }}
+                  </button>
+                </div>
+                <p v-if="profileForm.coreDomains.length > 0" class="text-xs text-gray-500 mt-2">{{ profileForm.coreDomains.length }}/3 selected</p>
               </UFormField>
 
-              <UFormField label="Skills" name="skills">
-                <USelectMenu
-                  v-model="profileForm.skills"
-                  :items="skillOptions"
-                  multiple
-                  searchable
-                  class="w-full"
-                />
+              <!-- Practical Expertise -->
+              <UFormField label="Practical Expertise" name="practicalExpertise" help="Select the specific skills and areas you can help with.">
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="expertise in practicalExpertiseOptions"
+                    :key="expertise.value"
+                    type="button"
+                    @click="togglePracticalExpertise(expertise.value)"
+                    :class="[
+                      'px-3 py-1.5 rounded-full border text-sm transition-all duration-200',
+                      profileForm.practicalExpertise.includes(expertise.value)
+                        ? 'border-teal-500 bg-teal-500 text-white'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-teal-400 text-gray-700 dark:text-gray-300'
+                    ]"
+                  >
+                    {{ expertise.label }}
+                  </button>
+                </div>
+                <p v-if="profileForm.practicalExpertise.length > 0" class="text-xs text-gray-500 mt-2">{{ profileForm.practicalExpertise.length }} selected</p>
+              </UFormField>
+
+              <!-- Experience Context -->
+              <UFormField label="Experience Context" name="experienceContext" help="Optional: At what stage do you typically help people?">
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="context in experienceContextOptions"
+                    :key="context.value"
+                    type="button"
+                    @click="toggleExperienceContext(context.value)"
+                    :class="[
+                      'px-3 py-1.5 rounded-full border text-sm transition-all duration-200',
+                      profileForm.experienceContext.includes(context.value)
+                        ? 'border-teal-500 bg-teal-500 text-white'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-teal-400 text-gray-700 dark:text-gray-300'
+                    ]"
+                  >
+                    {{ context.label }}
+                  </button>
+                </div>
               </UFormField>
 
               <UFormField label="Languages" name="languages">
@@ -317,14 +362,14 @@
                 {{ profileForm.experience }} experience
               </div>
 
-              <div v-if="profileForm.categories.length > 0" class="flex flex-wrap gap-1 justify-center">
+              <div v-if="profileForm.coreDomains.length > 0" class="flex flex-wrap gap-1 justify-center">
                 <UBadge
-                  v-for="category in profileForm.categories.slice(0, 3)"
-                  :key="category"
+                  v-for="domain in profileForm.coreDomains.slice(0, 3)"
+                  :key="domain"
                   variant="soft"
                   size="xs"
                 >
-                  {{ category }}
+                  {{ formatExpertiseLabel(domain) }}
                 </UBadge>
               </div>
             </div>
@@ -396,8 +441,9 @@ const profileSchema = z.object({
   bio: z.string().optional(),
   hourlyRate: z.number().min(0).optional(),
   experience: z.string().optional(),
-  categories: z.array(z.string()).optional(),
-  skills: z.array(z.string()).optional(),
+  coreDomains: z.array(z.string()).optional(),
+  practicalExpertise: z.array(z.string()).optional(),
+  experienceContext: z.array(z.string()).optional(),
   languages: z.array(z.string()).optional(),
   timezone: z.string().optional(),
   dateOfBirth: z.string().optional(),
@@ -414,8 +460,9 @@ const profileForm = reactive({
   bio: '',
   hourlyRate: 0,
   experience: '',
-  categories: [] as string[],
-  skills: [] as string[],
+  coreDomains: [] as string[],
+  practicalExpertise: [] as string[],
+  experienceContext: [] as string[],
   languages: [] as string[],
   timezone: '',
   dateOfBirth: '',
@@ -443,8 +490,9 @@ onMounted(async () => {
     // Role-specific fields
     if (user.value?.role === 'mentor') {
       profileForm.hourlyRate = data.profile.hourlyRate || 0
-      profileForm.skills = data.profile.skills || []
-      profileForm.categories = data.profile.categories || []
+      profileForm.coreDomains = data.profile.coreDomains || []
+      profileForm.practicalExpertise = data.profile.practicalExpertise || []
+      profileForm.experienceContext = data.profile.experienceContext || []
       profileForm.dateOfBirth = data.profile.dateOfBirth ? new Date(data.profile.dateOfBirth).toISOString().split('T')[0] : ''
       profileForm.expertiseDocument = data.profile.expertiseDocument || ''
     } else {
@@ -536,33 +584,82 @@ const experienceOptions = [
   '10+ years'
 ]
 
-const categoryOptions = [
-  'Software Development',
-  'Product Management',
-  'Design',
-  'Marketing',
-  'Sales',
-  'Data Science',
-  'Leadership',
-  'Career Growth',
-  'Entrepreneurship'
+// Layer 1: Core Domains (up to 3)
+const coreDomainOptions = [
+  { label: 'Business & Entrepreneurship', value: 'business-entrepreneurship' },
+  { label: 'Career Growth', value: 'career-growth' },
+  { label: 'Leadership & Management', value: 'leadership-management' },
+  { label: 'Technology & Product', value: 'technology-product' },
+  { label: 'Marketing & Growth', value: 'marketing-growth' },
+  { label: 'Finance & Investing', value: 'finance-investing' },
+  { label: 'Personal Development', value: 'personal-development' },
+  { label: 'Health & Wellbeing', value: 'health-wellbeing' },
+  { label: 'Creative & Media', value: 'creative-media' },
+  { label: 'Academia & Research', value: 'academia-research' },
 ]
 
-const skillOptions = [
-  'JavaScript',
-  'Python',
-  'React',
-  'Node.js',
-  'AWS',
-  'Product Strategy',
-  'User Research',
-  'UI/UX Design',
-  'Figma',
-  'Data Analysis',
-  'Machine Learning',
-  'Leadership',
-  'Communication'
+// Layer 2: Practical Expertise
+const practicalExpertiseOptions = [
+  { label: 'Fundraising & Pitching', value: 'fundraising-pitching' },
+  { label: 'Go-to-Market Strategy', value: 'go-to-market' },
+  { label: 'Hiring & Team Building', value: 'hiring-team-building' },
+  { label: 'Product Management', value: 'product-management' },
+  { label: 'UX/UI Design', value: 'ux-ui-design' },
+  { label: 'Software Engineering', value: 'software-engineering' },
+  { label: 'Sales Strategy', value: 'sales-strategy' },
+  { label: 'Public Speaking', value: 'public-speaking' },
+  { label: 'Executive Presence', value: 'executive-presence' },
+  { label: 'Financial Modelling', value: 'financial-modelling' },
+  { label: 'Career Switching', value: 'career-switching' },
+  { label: 'Interview Preparation', value: 'interview-preparation' },
+  { label: 'Time Management', value: 'time-management' },
+  { label: 'Burnout Recovery', value: 'burnout-recovery' },
 ]
+
+// Layer 3: Experience Context (optional)
+const experienceContextOptions = [
+  { label: 'Early stage', value: 'early-stage' },
+  { label: 'Growth stage', value: 'growth-stage' },
+  { label: 'Scale stage', value: 'scale-stage' },
+  { label: 'Transition / Reset', value: 'transition-reset' },
+  { label: 'High-pressure decision points', value: 'high-pressure' },
+]
+
+// Toggle functions for expertise selection
+const toggleCoreDomain = (value: string) => {
+  const index = profileForm.coreDomains.indexOf(value)
+  if (index > -1) {
+    profileForm.coreDomains.splice(index, 1)
+  } else if (profileForm.coreDomains.length < 3) {
+    profileForm.coreDomains.push(value)
+  }
+}
+
+const togglePracticalExpertise = (value: string) => {
+  const index = profileForm.practicalExpertise.indexOf(value)
+  if (index > -1) {
+    profileForm.practicalExpertise.splice(index, 1)
+  } else {
+    profileForm.practicalExpertise.push(value)
+  }
+}
+
+const toggleExperienceContext = (value: string) => {
+  const index = profileForm.experienceContext.indexOf(value)
+  if (index > -1) {
+    profileForm.experienceContext.splice(index, 1)
+  } else {
+    profileForm.experienceContext.push(value)
+  }
+}
+
+// Convert kebab-case expertise values to readable labels
+const formatExpertiseLabel = (value: string) => {
+  return value
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
 
 const languageOptions = [
   'English',
@@ -648,8 +745,8 @@ const profileCompleteness = computed(() => {
     if (profileForm.profileImage) completed++
     if (profileForm.hourlyRate) completed++
     if (profileForm.experience) completed++
-    if (profileForm.categories.length > 0) completed++
-    if (profileForm.skills.length > 0) completed++
+    if (profileForm.coreDomains.length > 0) completed++
+    if (profileForm.practicalExpertise.length > 0) completed++
     if (profileForm.languages.length > 0) completed++
     if (profileForm.dateOfBirth) completed++
     if (profileForm.expertiseDocument) completed++
@@ -674,8 +771,8 @@ const completenessItems = computed(() => {
       { label: 'Profile photo', completed: !!profileForm.profileImage },
       { label: 'Hourly rate', completed: !!profileForm.hourlyRate },
       { label: 'Experience', completed: !!profileForm.experience },
-      { label: 'Categories', completed: profileForm.categories.length > 0 },
-      { label: 'Skills', completed: profileForm.skills.length > 0 },
+      { label: 'Core Domains', completed: profileForm.coreDomains.length > 0 },
+      { label: 'Practical Expertise', completed: profileForm.practicalExpertise.length > 0 },
       { label: 'Date of Birth', completed: !!profileForm.dateOfBirth },
       { label: 'Expertise Document', completed: !!profileForm.expertiseDocument }
     )
@@ -706,8 +803,9 @@ const saveProfile = async () => {
 
     if (user.value?.role === 'mentor') {
       updateData.hourlyRate = profileForm.hourlyRate
-      updateData.skills = profileForm.skills
-      updateData.categories = profileForm.categories
+      updateData.coreDomains = profileForm.coreDomains
+      updateData.practicalExpertise = profileForm.practicalExpertise
+      updateData.experienceContext = profileForm.experienceContext
       updateData.dateOfBirth = profileForm.dateOfBirth
       updateData.expertiseDocument = profileForm.expertiseDocument
     } else {

@@ -131,22 +131,76 @@
       </div>
     </div>
 
-    <!-- Skills & Expertise -->
+    <!-- Expertise & Skills -->
     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
-      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-        Skills & Expertise
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+        Expertise & Skills
       </h2>
       
-      <div class="flex flex-wrap gap-2">
-        <UBadge
-          v-for="skill in mentor.skills"
-          :key="skill"
-          variant="soft"
-          color="secondary"
-          size="md"
-        >
-          {{ skill }}
-        </UBadge>
+      <div class="space-y-6">
+        <!-- Core Domains -->
+        <div v-if="mentor.coreDomains?.length > 0">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Core Domains</h3>
+          <div class="flex flex-wrap gap-2">
+            <UBadge
+              v-for="domain in mentor.coreDomains"
+              :key="domain"
+              variant="soft"
+              color="primary"
+              size="md"
+            >
+              {{ formatExpertiseLabel(domain) }}
+            </UBadge>
+          </div>
+        </div>
+
+        <!-- Practical Expertise -->
+        <div v-if="mentor.practicalExpertise?.length > 0">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Practical Expertise</h3>
+          <div class="flex flex-wrap gap-2">
+            <UBadge
+              v-for="expertise in mentor.practicalExpertise"
+              :key="expertise"
+              variant="soft"
+              color="secondary"
+              size="md"
+            >
+              {{ formatExpertiseLabel(expertise) }}
+            </UBadge>
+          </div>
+        </div>
+
+        <!-- Experience Context -->
+        <div v-if="mentor.experienceContext?.length > 0">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Helps People At</h3>
+          <div class="flex flex-wrap gap-2">
+            <UBadge
+              v-for="context in mentor.experienceContext"
+              :key="context"
+              variant="outline"
+              color="neutral"
+              size="md"
+            >
+              {{ formatExpertiseLabel(context) }}
+            </UBadge>
+          </div>
+        </div>
+
+        <!-- Legacy skills fallback -->
+        <div v-if="(!mentor.coreDomains || mentor.coreDomains.length === 0) && mentor.skills?.length > 0">
+          <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Skills</h3>
+          <div class="flex flex-wrap gap-2">
+            <UBadge
+              v-for="skill in mentor.skills"
+              :key="skill"
+              variant="soft"
+              color="secondary"
+              size="md"
+            >
+              {{ skill }}
+            </UBadge>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -510,6 +564,14 @@ const formatDate = (date: Date | string) => {
     day: 'numeric',
     year: 'numeric'
   }).format(dateObj)
+}
+
+// Convert kebab-case expertise values to readable labels
+const formatExpertiseLabel = (value: string) => {
+  return value
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }
 
 // SEO

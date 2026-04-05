@@ -148,11 +148,11 @@
           
           <div class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <UFormField label="Who do you help most?" name="experience" required>
+              <UFormField label="Experience level" name="experience" required>
                 <USelect
                   v-model="mentorForm.experience"
                   :items="experienceOptions"
-                  placeholder="Select who you help most"
+                  placeholder="Select your experience level"
                   size="lg"
                   class="w-full"
                 />
@@ -234,55 +234,90 @@
                 Your ID is securely stored and only used for verification purposes.
               </p>
             </UFormField>
+          </div>
+        </div>
 
-            <UFormField label="Skills & Expertise" name="skills" required>
-              <div class="space-y-3">
-                <UInput
-                  v-model="skillInput"
-                  placeholder="Add a skill (e.g., JavaScript, Leadership)"
-                  size="lg"
-                  @keyup.enter="addSkill"
-                  class="w-full"
+        <!-- Step 4: What can you help people with? (3-layer expertise) -->
+        <div v-else-if="currentStep === 4" class="p-8">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            What can you help people with?
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 mb-8">
+            Select your core areas of expertise. These are used to match you with the right mentees.
+          </p>
+          
+          <div class="space-y-8">
+            <!-- Layer 1: Core Domains -->
+            <UFormField label="Core Domains" name="coreDomains" required help="Select up to 3 high-level areas you specialize in.">
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                <button
+                  v-for="domain in coreDomainOptions"
+                  :key="domain.value"
+                  type="button"
+                  @click="toggleCoreDomain(domain.value)"
+                  :disabled="!mentorForm.coreDomains.includes(domain.value) && mentorForm.coreDomains.length >= 3"
+                  :class="[
+                    'p-3 rounded-xl border-2 text-left transition-all duration-200 text-sm font-medium',
+                    mentorForm.coreDomains.includes(domain.value)
+                      ? 'border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300'
+                      : mentorForm.coreDomains.length >= 3
+                        ? 'border-gray-100 dark:border-gray-800 opacity-50 cursor-not-allowed text-gray-400'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-teal-300 dark:hover:border-teal-500 text-gray-700 dark:text-gray-300'
+                  ]"
                 >
-                  <template #trailing>
-                    <UButton
-                      @click="addSkill"
-                      size="xs"
-                      variant="ghost"
-                      icon="heroicons:plus"
-                    />
-                  </template>
-                </UInput>
-                <div v-if="mentorForm.skills.length > 0" class="flex flex-wrap gap-2">
-                  <UBadge
-                    v-for="skill in mentorForm.skills"
-                    :key="skill"
-                    variant="soft"
-                    class="cursor-pointer"
-                    @click="removeSkill(skill)"
+                  {{ domain.label }}
+                </button>
+              </div>
+              <p v-if="mentorForm.coreDomains.length > 0" class="text-xs text-gray-500 mt-2">{{ mentorForm.coreDomains.length }}/3 selected</p>
+            </UFormField>
+
+            <!-- Layer 2: Practical Expertise -->
+            <UFormField label="Practical Expertise" name="practicalExpertise" required help="Select the specific skills and areas you can help with.">
+              <div class="space-y-3">
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    v-for="expertise in practicalExpertiseOptions"
+                    :key="expertise.value"
+                    type="button"
+                    @click="togglePracticalExpertise(expertise.value)"
+                    :class="[
+                      'px-3 py-1.5 rounded-full border text-sm transition-all duration-200',
+                      mentorForm.practicalExpertise.includes(expertise.value)
+                        ? 'border-teal-500 bg-teal-500 text-white'
+                        : 'border-gray-300 dark:border-gray-600 hover:border-teal-400 text-gray-700 dark:text-gray-300'
+                    ]"
                   >
-                    {{ skill }}
-                    <Icon name="heroicons:x-mark" class="w-3 h-3 ml-1" />
-                  </UBadge>
+                    {{ expertise.label }}
+                  </button>
                 </div>
+                <p v-if="mentorForm.practicalExpertise.length > 0" class="text-xs text-gray-500">{{ mentorForm.practicalExpertise.length }} selected</p>
               </div>
             </UFormField>
 
-            <UFormField label="Categories" name="categories" required>
-              <USelectMenu
-                v-model="mentorForm.categories"
-                :items="categoryOptions"
-                multiple
-                placeholder="Select categories you can mentor in"
-                size="lg"
-                class="w-full"
-              />
+            <!-- Layer 3: Experience Context (Optional) -->
+            <UFormField label="Experience Context" name="experienceContext" help="Optional: At what stage do you typically help people? Select all that apply.">
+              <div class="flex flex-wrap gap-2">
+                <button
+                  v-for="context in experienceContextOptions"
+                  :key="context.value"
+                  type="button"
+                  @click="toggleExperienceContext(context.value)"
+                  :class="[
+                    'px-3 py-1.5 rounded-full border text-sm transition-all duration-200',
+                    mentorForm.experienceContext.includes(context.value)
+                      ? 'border-teal-500 bg-teal-500 text-white'
+                      : 'border-gray-300 dark:border-gray-600 hover:border-teal-400 text-gray-700 dark:text-gray-300'
+                  ]"
+                >
+                  {{ context.label }}
+                </button>
+              </div>
             </UFormField>
           </div>
         </div>
 
-        <!-- Step 4: Who do you help most? -->
-        <div v-else-if="currentStep === 4" class="p-8">
+        <!-- Step 5: Who do you help most? -->
+        <div v-else-if="currentStep === 5" class="p-8">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Who do you help most?
           </h2>
@@ -319,8 +354,8 @@
           </p>
         </div>
 
-        <!-- Step 5: Support Type -->
-        <div v-else-if="currentStep === 5" class="p-8">
+        <!-- Step 6: Support Type -->
+        <div v-else-if="currentStep === 6" class="p-8">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             What type of support do you mainly offer?
           </h2>
@@ -353,8 +388,8 @@
           </p>
         </div>
 
-        <!-- Step 6: Preferences -->
-        <div v-else-if="currentStep === 6" class="p-8">
+        <!-- Step 7: Preferences -->
+        <div v-else-if="currentStep === 7" class="p-8">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Mentor Availability & Preferences
           </h2>
@@ -404,8 +439,8 @@
           </div>
         </div>
 
-        <!-- Step 7: Complete -->
-        <div v-else-if="currentStep === 7" class="p-8 text-center">
+        <!-- Step 8: Complete -->
+        <div v-else-if="currentStep === 8" class="p-8 text-center">
           <div class="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Icon name="heroicons:check-circle" class="w-10 h-10 text-green-600 dark:text-green-400" />
           </div>
@@ -480,7 +515,7 @@ const { categoryOptions, fetchCategories } = useCategories()
 const toast = useToast()
 
 const currentStep = ref(1)
-const totalSteps = 7
+const totalSteps = 8
 const isCompleting = ref(false)
 const isUploading = ref(false)
 const isUploadingImage = ref(false)
@@ -506,10 +541,11 @@ const profileForm = reactive({
 })
 
 const mentorForm = reactive({
-  experience: 'Early-stage professionals & first-time founders',
+  experience: 'Foundation (0–2 years)',
   hourlyRate: 75,
-  skills: [] as string[],
-  categories: [] as string[],
+  coreDomains: [] as string[],
+  practicalExpertise: [] as string[],
+  experienceContext: [] as string[],
   dateOfBirth: '',
   expertiseDocument: '',
   idDocument: '',
@@ -533,15 +569,55 @@ const preferencesForm = reactive({
 })
 
 // Input helpers
-const skillInput = ref('')
 const goalInput = ref('')
 
 // Options
 const experienceOptions = [
-  { label: 'Early-stage professionals & first-time founders', value: 'Early-stage professionals & first-time founders' },
-  { label: 'Growing professionals & startup builders', value: 'Growing professionals & startup builders' },
-  { label: 'Leaders, executives & scaling founders', value: 'Leaders, executives & scaling founders' },
-  { label: 'Career transitions & reinvention', value: 'Career transitions & reinvention' }
+  { label: 'Foundation (0–2 years)', value: 'Foundation (0–2 years)' },
+  { label: 'Growth (3–5 years)', value: 'Growth (3–5 years)' },
+  { label: 'Advanced (6–10 years)', value: 'Advanced (6–10 years)' },
+  { label: 'Senior / Expert (10+ years)', value: 'Senior / Expert (10+ years)' }
+]
+
+// Layer 1: Core Domains (up to 3)
+const coreDomainOptions = [
+  { label: 'Business & Entrepreneurship', value: 'business-entrepreneurship' },
+  { label: 'Career Growth', value: 'career-growth' },
+  { label: 'Leadership & Management', value: 'leadership-management' },
+  { label: 'Technology & Product', value: 'technology-product' },
+  { label: 'Marketing & Growth', value: 'marketing-growth' },
+  { label: 'Finance & Investing', value: 'finance-investing' },
+  { label: 'Personal Development', value: 'personal-development' },
+  { label: 'Health & Wellbeing', value: 'health-wellbeing' },
+  { label: 'Creative & Media', value: 'creative-media' },
+  { label: 'Academia & Research', value: 'academia-research' },
+]
+
+// Layer 2: Practical Expertise
+const practicalExpertiseOptions = [
+  { label: 'Fundraising & Pitching', value: 'fundraising-pitching' },
+  { label: 'Go-to-Market Strategy', value: 'go-to-market' },
+  { label: 'Hiring & Team Building', value: 'hiring-team-building' },
+  { label: 'Product Management', value: 'product-management' },
+  { label: 'UX/UI Design', value: 'ux-ui-design' },
+  { label: 'Software Engineering', value: 'software-engineering' },
+  { label: 'Sales Strategy', value: 'sales-strategy' },
+  { label: 'Public Speaking', value: 'public-speaking' },
+  { label: 'Executive Presence', value: 'executive-presence' },
+  { label: 'Financial Modelling', value: 'financial-modelling' },
+  { label: 'Career Switching', value: 'career-switching' },
+  { label: 'Interview Preparation', value: 'interview-preparation' },
+  { label: 'Time Management', value: 'time-management' },
+  { label: 'Burnout Recovery', value: 'burnout-recovery' },
+]
+
+// Layer 3: Experience Context (optional)
+const experienceContextOptions = [
+  { label: 'Early stage', value: 'early-stage' },
+  { label: 'Growth stage', value: 'growth-stage' },
+  { label: 'Scale stage', value: 'scale-stage' },
+  { label: 'Transition / Reset', value: 'transition-reset' },
+  { label: 'High-pressure decision points', value: 'high-pressure' },
 ]
 
 const targetAudienceOptions = [
@@ -646,14 +722,15 @@ const canProceed = computed(() => {
       return userRole.value === 'mentor' ? !!mentorForm.roleTitle : true
     case 3:
       return mentorForm.experience && mentorForm.hourlyRate && 
-             mentorForm.skills.length > 0 && mentorForm.categories.length > 0 &&
              mentorForm.dateOfBirth && isOldEnough.value && 
              mentorForm.expertiseDocument && mentorForm.idDocument
     case 4:
-      return mentorForm.targetAudience.length > 0
+      return mentorForm.coreDomains.length > 0 && mentorForm.practicalExpertise.length > 0
     case 5:
-      return mentorForm.supportTypes.length > 0
+      return mentorForm.targetAudience.length > 0
     case 6:
+      return mentorForm.supportTypes.length > 0
+    case 7:
       return preferencesForm.timezone && preferencesForm.languages.length > 0
     default:
       return true
@@ -766,17 +843,30 @@ const handleIdDocumentUpload = async (event: Event) => {
   }
 }
 
-const addSkill = () => {
-  if (skillInput.value.trim() && !mentorForm.skills.includes(skillInput.value.trim())) {
-    mentorForm.skills.push(skillInput.value.trim())
-    skillInput.value = ''
+const toggleCoreDomain = (value: string) => {
+  const index = mentorForm.coreDomains.indexOf(value)
+  if (index > -1) {
+    mentorForm.coreDomains.splice(index, 1)
+  } else if (mentorForm.coreDomains.length < 3) {
+    mentorForm.coreDomains.push(value)
   }
 }
 
-const removeSkill = (skill: string) => {
-  const index = mentorForm.skills.indexOf(skill)
+const togglePracticalExpertise = (value: string) => {
+  const index = mentorForm.practicalExpertise.indexOf(value)
   if (index > -1) {
-    mentorForm.skills.splice(index, 1)
+    mentorForm.practicalExpertise.splice(index, 1)
+  } else {
+    mentorForm.practicalExpertise.push(value)
+  }
+}
+
+const toggleExperienceContext = (value: string) => {
+  const index = mentorForm.experienceContext.indexOf(value)
+  if (index > -1) {
+    mentorForm.experienceContext.splice(index, 1)
+  } else {
+    mentorForm.experienceContext.push(value)
   }
 }
 
@@ -829,8 +919,9 @@ const completeOnboardingFlow = async () => {
         roleData: {
           experience: mentorForm.experience,
           hourlyRate: mentorForm.hourlyRate,
-          skills: mentorForm.skills,
-          categories: mentorForm.categories,
+          coreDomains: mentorForm.coreDomains,
+          practicalExpertise: mentorForm.practicalExpertise,
+          experienceContext: mentorForm.experienceContext,
           dateOfBirth: mentorForm.dateOfBirth,
           expertiseDocument: mentorForm.expertiseDocument,
           idDocument: mentorForm.idDocument,

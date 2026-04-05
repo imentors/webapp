@@ -81,8 +81,11 @@ export const mentorProfile = pgTable('mentor_profile', {
   location: text('location'),
   experience: text('experience'), // '0-2 years', '3-5 years', etc.
   hourlyRate: decimal('hourly_rate', { precision: 10, scale: 2 }),
-  skills: text('skills'), // JSON array as text
-  categories: text('categories'), // JSON array as text
+  skills: text('skills'), // JSON array as text (legacy)
+  categories: text('categories'), // JSON array as text (legacy)
+  coreDomains: text('core_domains'), // JSON array - Layer 1: high-level expertise areas
+  practicalExpertise: text('practical_expertise'), // JSON array - Layer 2: specific skills
+  experienceContext: text('experience_context'), // JSON array - Layer 3: stage of help
   languages: text('languages'), // JSON array as text
   timezone: text('timezone'),
   rating: decimal('rating', { precision: 3, scale: 2 }).default('0'),

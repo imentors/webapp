@@ -16,6 +16,9 @@ interface OnboardingData {
     hourlyRate?: number
     skills?: string[]
     categories?: string[]
+    coreDomains?: string[]
+    practicalExpertise?: string[]
+    experienceContext?: string[]
     dateOfBirth?: string
     expertiseDocument?: string
     idDocument?: string
@@ -105,6 +108,9 @@ export default defineEventHandler(async (event) => {
           hourlyRate: body.roleData.hourlyRate?.toString(),
           skills: JSON.stringify(body.roleData.skills || []),
           categories: JSON.stringify(body.roleData.categories || []),
+          coreDomains: JSON.stringify(body.roleData.coreDomains || []),
+          practicalExpertise: JSON.stringify(body.roleData.practicalExpertise || []),
+          experienceContext: JSON.stringify(body.roleData.experienceContext || []),
           languages: JSON.stringify(body.preferences.languages),
           timezone: body.preferences.timezone,
           dateOfBirth: body.roleData.dateOfBirth ? new Date(body.roleData.dateOfBirth) : null,
@@ -121,6 +127,9 @@ export default defineEventHandler(async (event) => {
             hourlyRate: body.roleData.hourlyRate?.toString(),
             skills: JSON.stringify(body.roleData.skills || []),
             categories: JSON.stringify(body.roleData.categories || []),
+            coreDomains: JSON.stringify(body.roleData.coreDomains || []),
+            practicalExpertise: JSON.stringify(body.roleData.practicalExpertise || []),
+            experienceContext: JSON.stringify(body.roleData.experienceContext || []),
             languages: JSON.stringify(body.preferences.languages),
             timezone: body.preferences.timezone,
             dateOfBirth: body.roleData.dateOfBirth ? new Date(body.roleData.dateOfBirth) : null,
