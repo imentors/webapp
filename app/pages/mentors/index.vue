@@ -125,7 +125,7 @@
     </div>
 
     <!-- Results -->
-    <div v-if="isLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div v-if="isLoading || isAiLoading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="i in 6"
         :key="i"
@@ -273,6 +273,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 
 const {
   isLoading,
@@ -310,6 +311,7 @@ const clearDiscoveryFilters = () => {
 // AI Matching state
 const showAIMatcher = ref(false)
 const aiMatches = ref<any[]>([])
+const isAiLoading = ref(false)
 
 const handleMatchesFound = (matches: any[]) => {
   aiMatches.value = matches
@@ -401,8 +403,34 @@ const applyDiscoveryFilters = () => {
   }
 }
 
+// Fetch AI matches if sessionId is present
+const fetchAIMatches = async (sessionId: string) => {
+  isAiLoading.value = true
+  try {
+    const response = await $fetch<{ matches: any[] }>('/api/ai/match/results', {
+      query: { sessionId }
+    })
+    aiMatches.value = response.matches
+  } catch (e) {
+    console.error('Failed to fetch AI matches:', e)
+    toast.add({
+      title: 'Error',
+      description: 'Failed to load AI recommendations',
+      color: 'error'
+    })
+  } finally {
+    isAiLoading.value = false
+  }
+}
+
 // Fetch mentors and filters on mount
 onMounted(async () => {
+  const sessionId = route.query.sessionId as string
+  
+  if (sessionId) {
+    await fetchAIMatches(sessionId)
+  }
+  
   // Apply discovery filters first if present
   if (isFromDiscovery.value) {
     applyDiscoveryFilters()

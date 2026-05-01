@@ -43,7 +43,19 @@
       </div>
 
       <!-- Step Content -->
-      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden relative">
+        <!-- AI Processing Overlay -->
+        <div v-if="isNavigating && currentStep === totalSteps" class="absolute inset-0 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm z-50 flex flex-col items-center justify-center p-8 text-center">
+          <div class="w-20 h-20 bg-teal-600 rounded-2xl flex items-center justify-center mb-6">
+            <Icon name="heroicons:sparkles" class="w-12 h-12 text-white animate-pulse" />
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Finding your perfect matches...
+          </h2>
+          <p class="text-gray-600 dark:text-gray-400 max-w-sm">
+            Our AI is analyzing your goals and journey to find the best mentors for you.
+          </p>
+        </div>
         
         <!-- Step 1: Goals -->
         <Transition name="slide" mode="out-in">
@@ -619,7 +631,17 @@ const handleContinue = async () => {
       }
     }
     
-    navigateTo(getMentorsUrl())
+    // NEW: Trigger AI matching
+    try {
+      const { sessionId } = await $fetch<{ sessionId: string }>('/api/ai/match/direct', {
+        method: 'POST',
+        body: responses.value
+      })
+      navigateTo(`/mentors?sessionId=${sessionId}&from=discovery`)
+    } catch (e) {
+      console.error('AI matching failed, falling back to regular filters:', e)
+      navigateTo(getMentorsUrl())
+    }
   } else {
     nextStep()
   }
