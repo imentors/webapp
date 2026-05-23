@@ -24,10 +24,10 @@ if (args.length < 2) {
 const [email, password, name = 'Admin'] = args
 
 async function createAdmin() {
-  const databaseUrl = process.env.NUXT_SUPABASE_DATABASE_URL
+  const databaseUrl = process.env.NUXT_NEON_DATABASE_URL
   
   if (!databaseUrl) {
-    console.error('Error: NUXT_SUPABASE_DATABASE_URL environment variable is not set')
+    console.error('Error: NUXT_NEON_DATABASE_URL environment variable is not set')
     process.exit(1)
   }
 
