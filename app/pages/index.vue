@@ -40,32 +40,27 @@
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <!-- Left: Text Content -->
           <div class="text-left">
-            <!-- Trust Badge -->
-            <div class="inline-flex items-center px-4 py-2 bg-teal-50 dark:bg-teal-900/20 rounded-full text-teal-700 dark:text-teal-300 text-sm font-medium mb-8 animate-pulse-soft border border-teal-200/50 dark:border-teal-700/30">
-              <Icon name="heroicons:sparkles-solid" class="w-4 h-4 mr-2" />
-              Trusted by 10,000+ professionals worldwide
-            </div>
             
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-6 leading-[1.1] tracking-tight">
-              Access Mentors &amp; Coaches 
-              <span class="text-gradient-teal-navy">Who've Built, Led, and Scaled</span>
+              Stop Figuring It Out 
+              <span class="text-gradient-teal-navy">Alone</span>
             </h1>
             
             <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-xl">
-              Get direct, 1-on-1 guidance from proven operators, founders, and leaders — not theory. Book a session and start growing today.
+              Book a 1-on-1 session with a mentor who has already solved what you are stuck on. Real founders. Real experience. No courses, no content — just the right conversation.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4 mb-8">
               <NuxtLink to="/discover">
-                <UButton size="xl" class="w-full sm:w-auto btn-glow shadow-lg shadow-teal-500/20">
+                <UButton size="xl" class="w-full sm:w-auto bg-[#10B981] hover:bg-[#059669] text-white border-none font-semibold shadow-lg shadow-[#10B981]/25">
                   <Icon name="heroicons:rocket-launch" class="w-5 h-5 mr-2" />
-                  Find a Mentor or Coach
+                  Find a Mentor
                 </UButton>
               </NuxtLink>
               <NuxtLink to="/auth/register?role=mentor">
-                <UButton size="xl" variant="outline" class="w-full sm:w-auto">
+                <UButton size="xl" class="w-full sm:w-auto border border-gray-300 dark:border-white text-gray-700 dark:text-white bg-transparent hover:bg-gray-100 dark:hover:bg-white/10 font-semibold">
                   <Icon name="heroicons:academic-cap" class="w-5 h-5 mr-2" />
-                  Become a Mentor
+                  Become a Mentor — It's Free
                 </UButton>
               </NuxtLink>
             </div>
@@ -73,92 +68,49 @@
             <div class="flex flex-wrap items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
               <div class="flex items-center">
                 <Icon name="heroicons:check-circle-solid" class="w-5 h-5 text-teal-500 mr-2" />
-                Free to browse
+                Pay per session — no monthly fees
               </div>
               <div class="flex items-center">
                 <Icon name="heroicons:check-circle-solid" class="w-5 h-5 text-teal-500 mr-2" />
-                Cancel anytime
+                Mentors with real founder experience
               </div>
               <div class="flex items-center">
                 <Icon name="heroicons:check-circle-solid" class="w-5 h-5 text-teal-500 mr-2" />
-                Vetted mentors only
+                Book in under 2 minutes
               </div>
             </div>
           </div>
 
-          <!-- Right: Floating Mentor Cards -->
-          <div class="relative hidden lg:block h-[520px]">
-            <!-- Card 1 - Top -->
-            <div class="absolute top-0 right-8 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-black/30 p-6 border border-gray-100 dark:border-gray-700 animate-float z-20 hover:scale-[1.02] transition-transform duration-300">
-              <div class="flex items-center space-x-4 mb-4">
-                <div class="w-14 h-14 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-teal-500/20">JD</div>
-                <div class="text-left">
-                  <h4 class="font-semibold text-gray-900 dark:text-white">Jane Doe</h4>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">Founder &amp; CEO</p>
-                </div>
+          <!-- Right: Onboarding Banner -->
+          <div class="hidden lg:flex items-center justify-center h-[520px] relative">
+            <div class="absolute inset-0 bg-gradient-to-tr from-teal-500/10 to-navy-500/10 rounded-3xl blur-2xl pointer-events-none"></div>
+            
+            <div class="relative w-full max-w-md p-10 rounded-3xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200/50 dark:border-gray-800 shadow-2xl shadow-teal-500/10 text-center animate-float hover:scale-[1.01] transition-all duration-300">
+              <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-teal-500/20">
+                <Icon name="heroicons:sparkles" class="w-8 h-8 text-white" />
               </div>
-              <div class="flex items-center space-x-1 mb-3">
-                <Icon v-for="i in 5" :key="i" name="heroicons:star-solid" class="w-4 h-4 text-yellow-400" />
-                <span class="text-sm text-gray-500 ml-2 font-medium">5.0 (128)</span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full text-xs font-medium">Product Strategy</span>
-                <span class="px-3 py-1 bg-navy-50 dark:bg-navy-900/30 text-navy-700 dark:text-navy-300 rounded-full text-xs font-medium">Leadership</span>
-              </div>
-              <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
-                <span class="text-sm text-gray-500 dark:text-gray-400">From <span class="font-semibold text-gray-900 dark:text-white">$150</span>/hr</span>
-                <span class="text-xs px-2 py-1 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-full font-medium">Available</span>
-              </div>
-            </div>
-
-            <!-- Card 2 - Middle left -->
-            <div class="absolute top-40 left-0 w-64 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-black/30 p-5 border border-gray-100 dark:border-gray-700 animate-float-delayed z-10 hover:scale-[1.02] transition-transform duration-300">
-              <div class="flex items-center space-x-3 mb-3">
-                <div class="w-12 h-12 bg-gradient-to-br from-navy-400 to-navy-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-navy-500/20">MS</div>
-                <div class="text-left">
-                  <h4 class="font-semibold text-gray-900 dark:text-white text-sm">Michael Smith</h4>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">VP of Engineering</p>
-                </div>
-              </div>
-              <div class="flex items-center space-x-1 mb-3">
-                <Icon v-for="i in 5" :key="i" name="heroicons:star-solid" class="w-3.5 h-3.5 text-yellow-400" />
-                <span class="text-xs text-gray-500 ml-1.5 font-medium">4.9 (96)</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs font-medium">System Design</span>
-                <span class="px-2.5 py-1 bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs font-medium">Career Growth</span>
-              </div>
-            </div>
-
-            <!-- Card 3 - Bottom right -->
-            <div class="absolute bottom-0 right-0 w-60 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl shadow-gray-200/50 dark:shadow-black/30 p-5 border border-gray-100 dark:border-gray-700 animate-float-slow z-30 hover:scale-[1.02] transition-transform duration-300">
-              <div class="flex items-center space-x-3 mb-3">
-                <div class="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-pink-500/20">AL</div>
-                <div class="text-left">
-                  <h4 class="font-semibold text-gray-900 dark:text-white text-sm">Amara Lee</h4>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">Marketing Director</p>
-                </div>
-              </div>
-              <div class="flex items-center space-x-1 mb-3">
-                <Icon v-for="i in 5" :key="i" name="heroicons:star-solid" class="w-3.5 h-3.5 text-yellow-400" />
-                <span class="text-xs text-gray-500 ml-1.5 font-medium">4.8 (72)</span>
-              </div>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="px-2.5 py-1 bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-full text-xs font-medium">Growth</span>
-                <span class="px-2.5 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium">Branding</span>
-              </div>
-            </div>
-
-            <!-- Decorative floating badge -->
-            <div class="absolute top-28 right-0 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 border border-gray-100 dark:border-gray-700 animate-float-slow z-40">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                  <Icon name="heroicons:arrow-trending-up-solid" class="w-4 h-4 text-green-600" />
-                </div>
-                <div>
-                  <p class="text-xs text-gray-500 dark:text-gray-400">Sessions this week</p>
-                  <p class="text-sm font-bold text-gray-900 dark:text-white">+28%</p>
-                </div>
+              
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Founding Onboarding
+              </h3>
+              
+              <p class="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                Our founding mentors and coaches are being onboarded now — register to be among the first.
+              </p>
+              
+              <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <NuxtLink to="/auth/register?role=mentor" class="flex-1">
+                  <UButton size="lg" class="w-full justify-center bg-[#10B981] hover:bg-[#059669] text-white border-none font-semibold py-3 shrink-0">
+                    <Icon name="heroicons:user-plus" class="w-5 h-5 mr-1" />
+                    Become a Mentor
+                  </UButton>
+                </NuxtLink>
+                <NuxtLink to="/auth/register?role=coach" class="flex-1">
+                  <UButton size="lg" class="w-full justify-center bg-[#10B981] hover:bg-[#059669] text-white border-none font-semibold py-3 shrink-0">
+                    <Icon name="heroicons:academic-cap" class="w-5 h-5 mr-1" />
+                    Become a Coach
+                  </UButton>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -166,21 +118,6 @@
       </div>
     </section>
 
-    <!-- Social Proof / Trusted By Bar -->
-    <section class="py-10 border-y border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-sm text-gray-400 dark:text-gray-500 font-medium uppercase tracking-widest mb-6">
-          Trusted by professionals from
-        </p>
-        <div class="marquee-container">
-          <div class="marquee-track">
-            <span v-for="(company, idx) in [...trustedCompanies, ...trustedCompanies]" :key="idx" class="text-gray-300 dark:text-gray-600 font-bold text-2xl whitespace-nowrap select-none">
-              {{ company }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Stats Section -->
     <section class="py-20 bg-gradient-to-br from-navy-700 via-navy-600 to-navy-800 relative overflow-hidden">
@@ -188,15 +125,15 @@
       <div class="absolute bottom-0 right-0 w-80 h-80 bg-navy-400/10 rounded-full blur-3xl"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          <div v-for="stat in stats" :key="stat.label" class="relative group">
-            <div class="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:bg-white/10">
-              <div class="w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center bg-white/10">
+          <div v-for="stat in stats" :key="stat.label" class="relative group h-full">
+            <div class="text-center p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 hover:bg-white/10 h-full flex flex-col justify-start">
+              <div class="w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center bg-white/10 shrink-0">
                 <Icon :name="stat.icon" class="w-6 h-6 text-teal-300" />
               </div>
-              <p class="text-3xl lg:text-4xl font-extrabold text-white mb-1">
+              <p class="text-xl lg:text-2xl font-extrabold text-white mb-2 leading-snug">
                 {{ stat.value }}
               </p>
-              <p class="text-sm text-navy-200 font-medium">{{ stat.label }}</p>
+              <p class="text-sm text-navy-200 font-medium mt-auto">{{ stat.label }}</p>
             </div>
           </div>
         </div>
@@ -338,41 +275,25 @@
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="py-24 bg-gradient-to-br from-navy-600 to-navy-900 relative overflow-hidden">
+    <!-- Founding Story Section -->
+    <section class="py-24 bg-gradient-to-br from-navy-700 via-navy-600 to-navy-800 relative overflow-hidden">
       <!-- Decorative background elements -->
-      <div class="absolute top-0 right-0 w-96 h-96 bg-navy-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      <div class="absolute bottom-0 left-0 w-96 h-96 bg-navy-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl"></div>
+      <div class="absolute top-0 right-0 w-96 h-96 bg-navy-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-navy-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="text-center mb-16">
-          <span class="inline-block px-4 py-1.5 bg-white/10 text-navy-100 text-sm font-semibold rounded-full mb-4 border border-white/10">Success Stories</span>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4">
-            What Our Users Say
-          </h2>
-          <p class="text-lg text-navy-200 max-w-2xl mx-auto">
-            Join thousands of professionals who've transformed their careers
-          </p>
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/15">
+          <Icon name="heroicons:book-open" class="w-8 h-8 text-teal-300" />
         </div>
-
-        <div class="grid md:grid-cols-3 gap-8">
-          <div v-for="testimonial in testimonials" :key="testimonial.name" class="bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all duration-300 group">
-            <div class="flex items-center space-x-1 mb-5">
-              <Icon v-for="i in 5" :key="i" name="heroicons:star-solid" class="w-5 h-5 text-yellow-400" />
-            </div>
-            <p class="text-white/90 mb-8 leading-relaxed text-[15px]">
-              "{{ testimonial.quote }}"
-            </p>
-            <div class="flex items-center space-x-3 mt-auto pt-5 border-t border-white/10">
-              <div class="w-11 h-11 rounded-full flex items-center justify-center text-white font-bold text-sm border border-white/20" :class="testimonial.avatarBg">{{ testimonial.initials }}</div>
-              <div>
-                <p class="font-semibold text-white text-sm">{{ testimonial.name }}</p>
-                <p class="text-sm text-navy-200">{{ testimonial.role }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-6 leading-tight">
+          Be Part of Our Founding Story
+        </h2>
+        
+        <p class="text-lg md:text-xl text-navy-200 max-w-2xl mx-auto leading-relaxed">
+          The first mentors and founders on iMentorsPro are joining now.
+        </p>
       </div>
     </section>
 
@@ -393,14 +314,15 @@
 
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <NuxtLink to="/discover">
-            <UButton size="xl" class="w-full sm:w-auto btn-glow shadow-lg shadow-teal-500/20 font-semibold px-8">
+            <UButton size="xl" class="w-full sm:w-auto bg-[#10B981] hover:bg-[#059669] text-white border-none font-semibold shadow-lg shadow-[#10B981]/25 px-8">
               <Icon name="heroicons:rocket-launch" class="w-5 h-5 mr-2" />
-              Get Started for Free
+              Find a Mentor
             </UButton>
           </NuxtLink>
-          <NuxtLink :to="isAuthenticated ? '/mentors' : '/discover'">
-            <UButton size="xl" variant="outline" class="w-full sm:w-auto px-8">
-              Browse Mentors &amp; Coaches
+          <NuxtLink to="/auth/register?role=mentor">
+            <UButton size="xl" class="w-full sm:w-auto border border-gray-300 dark:border-white text-gray-700 dark:text-white bg-transparent hover:bg-gray-100 dark:hover:bg-white/10 font-semibold px-8">
+              <Icon name="heroicons:academic-cap" class="w-5 h-5 mr-2" />
+              Become a Mentor — It's Free
             </UButton>
           </NuxtLink>
         </div>
@@ -420,40 +342,37 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'iMentorsPro - Connect with Expert Mentors & Coaches',
-  description: 'Accelerate your career growth with world-class mentors and coaches. Join iMentorsPro to find the perfect mentor or coach or share your expertise.',
-  ogTitle: 'iMentorsPro - Professional Mentorship Platform',
-  ogDescription: 'Connect with expert mentors and coaches and accelerate your career growth.',
+  title: 'iMentorsPro — The Mentorship Marketplace for Founders',
+  description: 'iMentorsPro connects founders and entrepreneurs with experienced mentors and coaches. Book 1-on-1 sessions, pay per booking. Real founders, real conversations',
+  ogTitle: 'iMentorsPro — The Mentorship Marketplace for Founders',
+  ogDescription: 'iMentorsPro connects founders and entrepreneurs with experienced mentors and coaches. Book 1-on-1 sessions, pay per booking. Real founders, real conversations',
   twitterCard: 'summary_large_image',
 })
 
-const trustedCompanies = [
-  'Google', 'Microsoft', 'Amazon', 'Netflix', 'Stripe', 'Shopify', 'Airbnb', 'Meta', 'Apple', 'Spotify', 'Uber', 'LinkedIn'
-]
 
 const stats = [
-  { value: '500+', label: 'Expert Mentors', icon: 'heroicons:academic-cap-solid', bgColor: 'bg-teal-100 dark:bg-teal-900/30', iconColor: 'text-teal-600 dark:text-teal-400' },
-  { value: '10k+', label: 'Active Learners', icon: 'heroicons:users-solid', bgColor: 'bg-navy-100 dark:bg-navy-900/30', iconColor: 'text-navy-600 dark:text-navy-400' },
-  { value: '25k+', label: 'Sessions Completed', icon: 'heroicons:video-camera-solid', bgColor: 'bg-purple-100 dark:bg-purple-900/30', iconColor: 'text-purple-600 dark:text-purple-400' },
-  { value: '4.9', label: 'Average Rating', icon: 'heroicons:star-solid', bgColor: 'bg-yellow-100 dark:bg-yellow-900/30', iconColor: 'text-yellow-600 dark:text-yellow-500' },
+  { value: 'Now Onboarding', label: 'Founding Mentors', icon: 'heroicons:user-plus-solid', bgColor: 'bg-teal-100 dark:bg-teal-900/30', iconColor: 'text-teal-600 dark:text-teal-400' },
+  { value: 'Free to Join', label: 'As a Mentor', icon: 'heroicons:academic-cap-solid', bgColor: 'bg-navy-100 dark:bg-navy-900/30', iconColor: 'text-navy-600 dark:text-navy-400' },
+  { value: 'Book in Minutes', label: 'Direct Connection', icon: 'heroicons:clock-solid', bgColor: 'bg-purple-100 dark:bg-purple-900/30', iconColor: 'text-purple-600 dark:text-purple-400' },
+  { value: '15-20%', label: 'Commission on Completed Sessions Only', icon: 'heroicons:banknotes-solid', bgColor: 'bg-yellow-100 dark:bg-yellow-900/30', iconColor: 'text-yellow-600 dark:text-yellow-500' },
 ]
 
 const steps = [
   {
-    title: 'Create Your Profile',
-    description: 'Sign up and tell us about your goals, interests, and what you\'re looking to achieve in your career.',
+    title: 'Find your mentor',
+    description: 'Browse by industry, challenge, or expertise. Every mentor is a real founder or operator.',
     gradient: 'bg-gradient-to-br from-teal-400 to-teal-600 shadow-teal-500/30',
     dotColor: 'bg-teal-400',
   },
   {
-    title: 'Find Your Perfect Mentor',
-    description: 'Browse our curated list of mentors and coaches, filter by expertise, and find someone who aligns with your goals.',
+    title: 'Book in minutes',
+    description: 'No gatekeepers. No cold emails. Choose a time and confirm instantly.',
     gradient: 'bg-gradient-to-br from-teal-500 to-navy-500 shadow-teal-500/30',
     dotColor: 'bg-teal-500',
   },
   {
-    title: 'Book & Grow',
-    description: 'Schedule sessions at your convenience, meet via video call, and start accelerating your career growth.',
+    title: 'Move faster',
+    description: 'Walk away with clarity, a decision made, and next steps you can act on.',
     gradient: 'bg-gradient-to-br from-navy-400 to-navy-600 shadow-navy-500/30',
     dotColor: 'bg-navy-400',
   },
@@ -478,27 +397,4 @@ const features = [
   { title: 'AI Matching', description: 'Our smart algorithm helps you find the perfect mentor based on your goals.', icon: 'heroicons:sparkles', bgColor: 'bg-amber-100 dark:bg-amber-900/30', iconColor: 'text-amber-600 dark:text-amber-400' },
 ]
 
-const testimonials = [
-  {
-    quote: 'Found an amazing mentor who helped me transition from engineering to product management. Best investment in my career!',
-    name: 'Sarah Kim',
-    role: 'Product Manager @ Stripe',
-    initials: 'SK',
-    avatarBg: 'bg-gradient-to-br from-teal-400 to-teal-600',
-  },
-  {
-    quote: 'As a mentor, I love how easy the platform makes it to manage bookings and connect with ambitious professionals.',
-    name: 'David Rodriguez',
-    role: 'VP Engineering @ Netflix',
-    initials: 'DR',
-    avatarBg: 'bg-gradient-to-br from-navy-400 to-navy-600',
-  },
-  {
-    quote: 'The AI matching feature connected me with a mentor who understood exactly what I needed. Doubled my freelance rates in 3 months!',
-    name: 'Alex Liu',
-    role: 'Freelance Designer',
-    initials: 'AL',
-    avatarBg: 'bg-gradient-to-br from-pink-400 to-rose-500',
-  },
-]
 </script>
